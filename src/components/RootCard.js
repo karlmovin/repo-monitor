@@ -83,14 +83,22 @@ class RootCard extends React.Component {
       .then(
         function(response) {
           console.log(this.state);
-          this.setState({ loading: false, repository: response.data });
+          this.setState({
+            loading: false,
+            repository: response.data,
+            clone_url: response.data.clone_url,
+            repo_url: response.data.html_url,
+            last_update: response.data.updated_at
+          });
 
-          service.getCommitRuns(repoowner, reponame, 'master', username, password).then(
-            function(response) {
-              this.setState({});
-              console.log(this.state);
-            }.bind(this)
-          );
+          service
+            .getCommitRuns(repoowner, reponame, 'master', username, password)
+            .then(
+              function(response) {
+                this.setState({});
+                console.log(this.state);
+              }.bind(this)
+            );
         }.bind(this)
       )
       .catch(
