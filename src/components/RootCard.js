@@ -2,11 +2,15 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Fab from '@material-ui/core/Fab';
+
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PAT from '@material-ui/icons/Fingerprint';
 import Repo from '@material-ui/icons/Dvr';
-import Config from '../config'
+import Connect from '@material-ui/icons/Cast';
+
 import RootSpinner from './RootSpinner';
+import Config from '../config';
 
 class RootCard extends React.Component {
   state = {
@@ -64,6 +68,12 @@ class RootCard extends React.Component {
             )
           }}
         />
+        <Fab variant="extended" aria-label="connect" className="connect">
+          <InputAdornment position="start">
+            <Connect />
+          </InputAdornment>
+          Connect
+        </Fab>
         {loading && <RootSpinner />}
       </Card>
     );

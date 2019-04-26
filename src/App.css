@@ -24,3 +24,7 @@
     top: calc(50% - 40px/2);
     left: calc(50% - 40px/2);
 }
+
+.root-card .connect {
+    width: 100%
+}
