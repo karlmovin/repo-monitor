@@ -137,10 +137,16 @@ class RootCard extends React.Component {
 	}
 
 	render() {
-		const { loading, repository } = this.state;
+    const { loading, repository, error } = this.state;
+
+    // Add animation to the card if an error ocurred.
+    let cardClassNames = 'root-card animated';
+    if (error) {
+      cardClassNames += ' wobble';
+    }
 
 		return (
-			<Card className="root-card">
+			<Card className={cardClassNames}>
 				{!repository && (
 					<CardHeader
 						title="Repository monitor"
