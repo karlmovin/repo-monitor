@@ -41,6 +41,16 @@ class RootCard extends React.Component {
     this.state.autoConnect = urlParams.has('autoConnect') ? urlParams.get('autoConnect') : this.state.autoConnect;
   }
 
+  componentDidMount() {
+    const { repoowner, reponame, username, password, autoConnect } = this.state;
+
+    // If all the parameters are set, and autoConnect is set - trigger 
+    // click right away.
+    if (repoowner && reponame && username && password && autoConnect) {
+      this.handleClick();
+    }
+  }
+
 	handleChange = (name) => (event) => {
 		console.log('changing text field ' + name + ' to ' + event.target.value);
 		this.setState({ [name]: event.target.value });
