@@ -28,3 +28,9 @@
 .root-card .connect {
     left: calc(50% - 133px/2);
 }
+
+.root-card .error {
+    color: red;
+    margin-top: 0;
+    font-size: 1rem;
+}

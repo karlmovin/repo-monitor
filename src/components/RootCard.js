@@ -23,6 +23,7 @@ class RootCard extends React.Component {
 		username: Config.username,
 		password: Config.password,
 		loading: false,
+		error: null,
 		repository: null
 	};
 
@@ -33,7 +34,7 @@ class RootCard extends React.Component {
 
 	handleClick = () => {
 		const { repoowner, reponame, username, password } = this.state;
-		this.setState({ loading: true });
+		this.setState({ loading: true, error: null });
 
 		// TODO: Call GitHub.
 		const service = new GitHubService();
@@ -41,19 +42,23 @@ class RootCard extends React.Component {
 			.getRepo(repoowner, reponame, username, password)
 			.then(
 				function(response) {
-					// handle success
-					this.setState({ loading: false, repository: response.data });
 					console.log(this.state);
+					this.setState({ loading: false, repository: response.data });
 				}.bind(this)
 			)
-			.catch(function(error) {
-				// handle error
-				console.log(error);
-			});
+			.catch(
+				function(error) {
+					console.log(error);
+					this.setState({
+						loading: false,
+						error: 'Oops, something went wrong! Please check your credentials and try again.'
+					});
+				}.bind(this)
+			);
 	};
 
 	renderConnect() {
-		const { repoowner, reponame, username, password } = this.state;
+		const { repoowner, reponame, username, password, error } = this.state;
 
 		return (
 			<div>
@@ -109,6 +114,7 @@ class RootCard extends React.Component {
 						)
 					}}
 				/>
+				{error && <p className="error">{error}</p>}
 				<Fab
 					variant="extended"
 					aria-label="connect"
