@@ -7,6 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PAT from '@material-ui/icons/Fingerprint';
 import Repo from '@material-ui/icons/Dvr';
+import Connect from '@material-ui/icons/Cast';
 
 import RootSpinner from './RootSpinner';
 import Config from '../config';
