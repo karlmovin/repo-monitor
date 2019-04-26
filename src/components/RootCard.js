@@ -26,7 +26,10 @@ class RootCard extends React.Component {
   };
 
   handleClick = () => {
+    const { owner, reponame, pat } = this.state;
     this.setState({ loading: true });
+
+    // TODO: Call GitHub.
   }
 
   render() {
