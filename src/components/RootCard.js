@@ -25,6 +25,10 @@ class RootCard extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleClick = () => {
+    this.setState({ loading: true });
+  }
+
   render() {
     const { owner, reponame, pat, loading } = this.state;
     return (
@@ -68,7 +72,7 @@ class RootCard extends React.Component {
             )
           }}
         />
-        <Fab variant="extended" aria-label="connect" className="connect">
+        <Fab variant="extended" aria-label="connect" className="connect" color='primary' onClick={this.handleClick}>
           <InputAdornment position="start">
             <Connect />
           </InputAdornment>
