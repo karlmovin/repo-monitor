@@ -3,12 +3,13 @@ import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Config from '../config'
 
 class RootCard extends React.Component {
   state = {
-    owner: 'fredrikfloven',
-    reponame: 'repo-monitor',
-    pat: ''
+    owner: Config.owner,
+    reponame: Config.reponame,
+    pat: Config.pat
   };
 
   handleChange = name => event => {
@@ -18,7 +19,6 @@ class RootCard extends React.Component {
 
   render() {
     const { owner, reponame, pat } = this.state;
-
     return (
       <Card className="root-card">
         <TextField
