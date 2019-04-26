@@ -21,11 +21,25 @@ class RootCard extends React.Component {
 		repoowner: Config.repoowner,
 		reponame: Config.reponame,
 		username: Config.username,
-		password: Config.password,
+    password: Config.password,
+    autoConnect: false,
+		repository: null,
 		loading: false,
-		error: null,
-		repository: null
-	};
+		error: null
+  };
+  
+  constructor(props, context) {
+    super(props, context);
+
+    // Check URL parameters. If there is one available, use that instead of the
+    // Config defaults.
+    const urlParams = new URLSearchParams(window.location.search);
+    this.state.repoowner = urlParams.has('repoowner') ? urlParams.get('repoowner') : this.state.repoowner;
+    this.state.reponame = urlParams.has('reponame') ? urlParams.get('reponame') : this.state.reponame;
+    this.state.username = urlParams.has('username') ? urlParams.get('username') : this.state.username;
+    this.state.password = urlParams.has('password') ? urlParams.get('password') : this.state.password;
+    this.state.autoConnect = urlParams.has('autoConnect') ? urlParams.get('autoConnect') : this.state.autoConnect;
+  }
 
 	handleChange = (name) => (event) => {
 		console.log('changing text field ' + name + ' to ' + event.target.value);
