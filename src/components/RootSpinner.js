@@ -5,7 +5,7 @@ class RootSpinner extends React.Component {
   render() {
     return (
       <div className='root-spinner-container'>
-        <CircularProgress className='root-spinner' />
+        <CircularProgress className='root-spinner' color='primary' />
       </div>
     );
   }

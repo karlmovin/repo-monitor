@@ -13,7 +13,7 @@ class RootCard extends React.Component {
     owner: Config.owner,
     reponame: Config.reponame,
     pat: Config.pat,
-    loading: false
+    loading: true
   };
 
   handleChange = name => event => {
