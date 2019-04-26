@@ -41,7 +41,4 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    # pathtoPublish: 'build' 
-    #artifactName: 'drop' 
-    #publishLocation: 'Container' # Options: container, filePath
-    #targetPath: # Required when publishLocation == FilePath
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
