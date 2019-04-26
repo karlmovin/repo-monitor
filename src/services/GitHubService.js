@@ -4,7 +4,7 @@ export default class GitHubService {
   getRepo(repoowner, reponame, username, password) {
     username = username || repoowner;
     return axios.get(
-      'https://api.github.com/repos/' + repoowner + '/' + reponame ,
+      'https://api.github.com/repos/' + repoowner + '/' + reponame,
       {
         auth: {
           username: username,
@@ -14,16 +14,22 @@ export default class GitHubService {
     );
   }
 
-  getCommitRuns(url, commit, username, password) {
+  getCommitRuns(repoowner, reponame, commit, username, password) {
     username = username || repoowner;
     return axios.get(
-      url + "/commits/" + commit + "/check-runs",
+      'https://api.github.com/repos/' +
+        repoowner +
+        '/' +
+        reponame +
+        '/commits/' +
+        commit +
+        '/check-runs',
       {
         auth: {
           username: username,
           password: password
         },
-        headers: {'Accept': 'application/vnd.github.antiope-preview+json'}
+        headers: { Accept: 'application/vnd.github.antiope-preview+json' }
       }
     );
   }
