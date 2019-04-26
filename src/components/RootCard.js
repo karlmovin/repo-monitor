@@ -5,19 +5,22 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import PAT from '@material-ui/icons/Fingerprint';
+import Password from '@material-ui/icons/Fingerprint';
 import Repo from '@material-ui/icons/Dvr';
 import Connect from '@material-ui/icons/Cast';
 
+import GitHubService from '../services/GitHubService';
 import RootSpinner from './RootSpinner';
 import Config from '../config';
 
 class RootCard extends React.Component {
   state = {
-    owner: Config.owner,
+    repoowner: Config.repoowner,
     reponame: Config.reponame,
-    pat: Config.pat,
-    loading: false
+    username: Config.username,
+    password: Config.password,
+    loading: false,
+    repository: null
   };
 
   handleChange = name => event => {
@@ -26,21 +29,35 @@ class RootCard extends React.Component {
   };
 
   handleClick = () => {
-    const { owner, reponame, pat } = this.state;
+    const { repoowner, reponame, username, password } = this.state;
     this.setState({ loading: true });
 
     // TODO: Call GitHub.
-  }
+    const service = new GitHubService();
+    service
+      .getRepo(repoowner, reponame, username, password)
+      .then(
+        function(response) {
+          // handle success
+          this.setState({ loading: false, repository: response.data });
+          console.log(this.state);
+        }.bind(this)
+      )
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+  };
 
   render() {
-    const { owner, reponame, pat, loading } = this.state;
+    const { repoowner, reponame, username, password, loading } = this.state;
     return (
       <Card className="root-card">
         <TextField
           className="text-field"
           label="Repo Owner Name"
-          value={owner}
-          onChange={this.handleChange('owner')}
+          value={repoowner}
+          onChange={this.handleChange('repoowner')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -64,18 +81,37 @@ class RootCard extends React.Component {
         />
         <TextField
           className="text-field"
-          label="Personal Access Token"
-          value={pat}
-          onChange={this.handleChange('pat')}
+          label="Username"
+          value={username}
+          onChange={this.handleChange('username')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <PAT />
+                <AccountCircle />
               </InputAdornment>
             )
           }}
         />
-        <Fab variant="extended" aria-label="connect" className="connect" color='primary' onClick={this.handleClick}>
+        <TextField
+          className="text-field"
+          label="Personal Access Token"
+          value={password}
+          onChange={this.handleChange('password')}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Password />
+              </InputAdornment>
+            )
+          }}
+        />
+        <Fab
+          variant="extended"
+          aria-label="connect"
+          className="connect"
+          color="primary"
+          onClick={this.handleClick}
+        >
           <InputAdornment position="start">
             <Connect />
           </InputAdornment>
