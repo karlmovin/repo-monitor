@@ -1,5 +1,8 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
@@ -132,8 +135,18 @@ class RootCard extends React.Component {
 
 		return (
 			<Card className="root-card">
-				{!repository && this.renderConnect()}
-				{repository && this.renderRepository()}
+				{!repository && (
+					<CardHeader
+						title="Repository monitor"
+						subheader="You can use a password or personal access token to authenticate with GitHub."
+					/>
+				)}
+
+				<CardContent>
+					{!repository && this.renderConnect()}
+					{repository && this.renderRepository()}
+				</CardContent>
+
 				{loading && <RootSpinner />}
 			</Card>
 		);
