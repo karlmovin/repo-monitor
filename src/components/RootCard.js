@@ -82,7 +82,6 @@ class RootCard extends React.Component {
       .getRepo(repoowner, reponame, username, password)
       .then(
         function(response) {
-          console.log(this.state);
           this.setState({
             loading: false,
             repository: response.data,
@@ -96,7 +95,7 @@ class RootCard extends React.Component {
             .then(
               function(response) {
                 this.setState({});
-                console.log(this.state);
+                console.log(response);
               }.bind(this)
             );
         }.bind(this)
