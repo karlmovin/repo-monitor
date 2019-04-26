@@ -30,9 +30,18 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'build' 
+    #includeRootFolder: true 
+    #archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
+    #replaceExistingArchive: true 
+    #verbose: # Optional
+    #quiet: # Optional
+
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: 'build' 
+    # pathtoPublish: 'build' 
     #artifactName: 'drop' 
     #publishLocation: 'Container' # Options: container, filePath
     #targetPath: # Required when publishLocation == FilePath
