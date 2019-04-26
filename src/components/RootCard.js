@@ -3,6 +3,8 @@ import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import PAT from '@material-ui/icons/Fingerprint';
+import Repo from '@material-ui/icons/Dvr';
 import Config from '../config'
 
 class RootCard extends React.Component {
@@ -42,7 +44,7 @@ class RootCard extends React.Component {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <AccountCircle />
+                <Repo />
               </InputAdornment>
             )
           }}
@@ -55,7 +57,7 @@ class RootCard extends React.Component {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <AccountCircle />
+                <PAT />
               </InputAdornment>
             )
           }}
