@@ -1,10 +1,26 @@
-.root-card{
-    margin: 20px auto;
-    padding: 20px;
+.root-card {
+	margin: 20px auto;
+	padding: 20px;
     max-width: 300px;
+    position: relative;
 }
 
-.root-card .text-field{
-    width: 100%;
-    margin-bottom: 20px;
+.root-card .text-field {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.root-spinner-container {
+    position: absolute;
+    background-color: #ffffffad;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.root-spinner-container .root-spinner {
+    position: relative;
+    top: calc(50% - 40px/2);
+    left: calc(50% - 40px/2);
 }

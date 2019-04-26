@@ -4,12 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Config from '../config'
+import RootSpinner from './RootSpinner';
 
 class RootCard extends React.Component {
   state = {
     owner: Config.owner,
     reponame: Config.reponame,
-    pat: Config.pat
+    pat: Config.pat,
+    loading: false
   };
 
   handleChange = name => event => {
@@ -18,7 +20,7 @@ class RootCard extends React.Component {
   };
 
   render() {
-    const { owner, reponame, pat } = this.state;
+    const { owner, reponame, pat, loading } = this.state;
     return (
       <Card className="root-card">
         <TextField
@@ -60,6 +62,7 @@ class RootCard extends React.Component {
             )
           }}
         />
+        {loading && <RootSpinner />}
       </Card>
     );
   }

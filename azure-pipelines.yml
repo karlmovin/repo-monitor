@@ -19,10 +19,6 @@ steps:
     sourceFolder: $(Agent.TempDirectory)
     contents: 'config.js' 
     targetFolder: 'src'
-    #cleanTargetFolder: false # Optional
-    #overWrite: false # Optional
-    #flattenFolders: false # Optional
-
 
 - task: NodeTool@0
   inputs:
