@@ -14,113 +14,130 @@ import RootSpinner from './RootSpinner';
 import Config from '../config';
 
 class RootCard extends React.Component {
-  state = {
-    repoowner: Config.repoowner,
-    reponame: Config.reponame,
-    username: Config.username,
-    password: Config.password,
-    loading: false,
-    repository: null
-  };
+	state = {
+		repoowner: Config.repoowner,
+		reponame: Config.reponame,
+		username: Config.username,
+		password: Config.password,
+		loading: false,
+		repository: null
+	};
 
-  handleChange = name => event => {
-    console.log('changing text field ' + name + ' to ' + event.target.value);
-    this.setState({ [name]: event.target.value });
-  };
+	handleChange = (name) => (event) => {
+		console.log('changing text field ' + name + ' to ' + event.target.value);
+		this.setState({ [name]: event.target.value });
+	};
 
-  handleClick = () => {
-    const { repoowner, reponame, username, password } = this.state;
-    this.setState({ loading: true });
+	handleClick = () => {
+		const { repoowner, reponame, username, password } = this.state;
+		this.setState({ loading: true });
 
-    // TODO: Call GitHub.
-    const service = new GitHubService();
-    service
-      .getRepo(repoowner, reponame, username, password)
-      .then(
-        function(response) {
-          // handle success
-          this.setState({ loading: false, repository: response.data });
-          console.log(this.state);
-        }.bind(this)
-      )
-      .catch(function(error) {
-        // handle error
-        console.log(error);
-      });
-  };
+		// TODO: Call GitHub.
+		const service = new GitHubService();
+		service
+			.getRepo(repoowner, reponame, username, password)
+			.then(
+				function(response) {
+					// handle success
+					this.setState({ loading: false, repository: response.data });
+					console.log(this.state);
+				}.bind(this)
+			)
+			.catch(function(error) {
+				// handle error
+				console.log(error);
+			});
+	};
 
-  render() {
-    const { repoowner, reponame, username, password, loading } = this.state;
-    return (
-      <Card className="root-card">
-        <TextField
-          className="text-field"
-          label="Repo Owner Name"
-          value={repoowner}
-          onChange={this.handleChange('repoowner')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            )
-          }}
-        />
-        <TextField
-          className="text-field"
-          label="Repository Name"
-          value={reponame}
-          onChange={this.handleChange('reponame')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Repo />
-              </InputAdornment>
-            )
-          }}
-        />
-        <TextField
-          className="text-field"
-          label="Username"
-          value={username}
-          onChange={this.handleChange('username')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            )
-          }}
-        />
-        <TextField
-          className="text-field"
-          label="Personal Access Token"
-          value={password}
-          onChange={this.handleChange('password')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Password />
-              </InputAdornment>
-            )
-          }}
-        />
-        <Fab
-          variant="extended"
-          aria-label="connect"
-          className="connect"
-          color="primary"
-          onClick={this.handleClick}
-        >
-          <InputAdornment position="start">
-            <Connect />
-          </InputAdornment>
-          Connect
-        </Fab>
-        {loading && <RootSpinner />}
-      </Card>
-    );
-  }
+	renderConnect() {
+		const { repoowner, reponame, username, password } = this.state;
+
+		return (
+			<div>
+				<TextField
+					className="text-field"
+					label="Repo Owner Name"
+					value={repoowner}
+					onChange={this.handleChange('repoowner')}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position="start">
+								<AccountCircle />
+							</InputAdornment>
+						)
+					}}
+				/>
+				<TextField
+					className="text-field"
+					label="Repository Name"
+					value={reponame}
+					onChange={this.handleChange('reponame')}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position="start">
+								<Repo />
+							</InputAdornment>
+						)
+					}}
+				/>
+				<TextField
+					className="text-field"
+					label="Username"
+					value={username}
+					onChange={this.handleChange('username')}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position="start">
+								<AccountCircle />
+							</InputAdornment>
+						)
+					}}
+				/>
+				<TextField
+					className="text-field"
+					label="Personal Access Token"
+					value={password}
+					onChange={this.handleChange('password')}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position="start">
+								<Password />
+							</InputAdornment>
+						)
+					}}
+				/>
+				<Fab
+					variant="extended"
+					aria-label="connect"
+					className="connect"
+					color="primary"
+					onClick={this.handleClick}
+				>
+					<InputAdornment position="start">
+						<Connect />
+					</InputAdornment>
+					Connect
+				</Fab>
+			</div>
+		);
+	}
+
+	renderRepository() {
+		const { repository } = this.state;
+		return <div>{JSON.stringify(repository.owner)}</div>;
+	}
+
+	render() {
+		const { loading, repository } = this.state;
+
+		return (
+			<Card className="root-card">
+				{!repository && this.renderConnect()}
+				{repository && this.renderRepository()}
+				{loading && <RootSpinner />}
+			</Card>
+		);
+	}
 }
 
 export default RootCard;
