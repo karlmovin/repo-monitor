@@ -29,8 +29,8 @@ class RootCard extends React.Component {
     repo_url: null,
     clone_url: null,
     repo_status: null,
-    latestCommitSha: null,
-    commitstatus: null,
+    latest_commit_sha: null,
+    commit_status: null,
     last_update: null
   };
 
@@ -68,7 +68,6 @@ class RootCard extends React.Component {
   }
 
   handleChange = name => event => {
-    console.log('changing text field ' + name + ' to ' + event.target.value);
     this.setState({ [name]: event.target.value });
   };
 
@@ -94,8 +93,14 @@ class RootCard extends React.Component {
             .getCommitRuns(repoowner, reponame, 'master', username, password)
             .then(
               function(response) {
-                this.setState({});
-                console.log(response);
+                var data = response.data.check_runs[0];
+                console.log(data);
+                this.setState({
+                  ci_url: data.details_url,
+                  ci_name: data.app.name,
+                  latest_commit_sha: data.head_sha,
+                  commit_status: data.conclusion
+                });
               }.bind(this)
             );
         }.bind(this)
@@ -160,6 +165,7 @@ class RootCard extends React.Component {
           className="text-field"
           label="Personal Access Token"
           value={password}
+          type="password"
           onChange={this.handleChange('password')}
           InputProps={{
             startAdornment: (
@@ -187,8 +193,16 @@ class RootCard extends React.Component {
   }
 
   renderRepository() {
-    const { repository } = this.state;
-    return <div>{JSON.stringify(repository.owner)}</div>;
+    //const { repository } = this.state;
+    return (
+      <div>
+        <a href={this.state.repo_url}>{this.state.reponame}</a>
+        <br />
+        <a href={this.state.clone_url}>clone-link</a>
+        <br />
+      </div>
+    );
+    //<div>{JSON.stringify(repository.owner)}</div>;
   }
 
   render() {
