@@ -11,6 +11,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Password from '@material-ui/icons/Fingerprint';
 import Repo from '@material-ui/icons/Dvr';
 import Connect from '@material-ui/icons/Cast';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import GitHubService from '../services/GitHubService';
 import RootSpinner from './RootSpinner';
@@ -22,6 +25,7 @@ class RootCard extends React.Component {
     reponame: Config.reponame,
     username: Config.username,
     password: Config.password,
+    showPassword: false,
     autoConnect: false,
     loading: false,
     error: null,
@@ -29,6 +33,9 @@ class RootCard extends React.Component {
     repo_url: null,
     clone_url: null,
     repo_status: null,
+    author: null,
+    committer: null,
+    message: null,
     latest_commit_sha: null,
     commit_status: null,
     last_update: null
@@ -71,6 +78,10 @@ class RootCard extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleClickShowPassword = () => {
+    this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
   handleClick = () => {
     const { repoowner, reponame, username, password } = this.state;
     this.setState({ loading: true, error: null });
@@ -90,17 +101,37 @@ class RootCard extends React.Component {
           });
 
           service
-            .getCommitRuns(repoowner, reponame, 'master', username, password)
+            .getCommit(repoowner, reponame, 'master', username, password)
             .then(
               function(response) {
-                var data = response.data.check_runs[0];
+                var data = response.data;
                 console.log(data);
                 this.setState({
-                  ci_url: data.details_url,
-                  ci_name: data.app.name,
-                  latest_commit_sha: data.head_sha,
-                  commit_status: data.conclusion
+                  latest_commit_sha: data.sha,
+                  commit_url: data.html_url,
+                  author: data.commit.author.name,
+                  committer: data.commit.committer.name,
+                  message: data.commit.message
                 });
+                service
+                  .getCommitRuns(
+                    repoowner,
+                    reponame,
+                    'master',
+                    username,
+                    password
+                  )
+                  .then(
+                    function(response) {
+                      var data = response.data.check_runs[0];
+                      //console.log(data);
+                      this.setState({
+                        ci_url: null || data.details_url,
+                        ci_name: null || data.app.name,
+                        commit_status: data.conclusion
+                      });
+                    }.bind(this)
+                  );
               }.bind(this)
             );
         }.bind(this)
@@ -165,13 +196,21 @@ class RootCard extends React.Component {
           className="text-field"
           label="Personal Access Token"
           value={password}
-          type="password"
+          type={this.state.showPassword ? 'text' : 'password'}
           onChange={this.handleChange('password')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <Password />
               </InputAdornment>
+            ),
+            endAdornment: (
+              <IconButton
+                aria-label="Toggle password visibility"
+                onClick={this.handleClickShowPassword}
+              >
+                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
             )
           }}
         />
