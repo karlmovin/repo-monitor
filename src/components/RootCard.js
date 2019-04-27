@@ -6,6 +6,10 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
+import Typography from '@material-ui/core/Typography';
+//import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Password from '@material-ui/icons/Fingerprint';
@@ -14,6 +18,11 @@ import Connect from '@material-ui/icons/Cast';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Success from '@material-ui/icons/Done';
+import Fail from '@material-ui/icons/Error';
+
+import Code from '@material-ui/icons/Code';
+import Copy from '@material-ui/icons/FileCopy';
 
 import GitHubService from '../services/GitHubService';
 import RootSpinner from './RootSpinner';
@@ -38,7 +47,10 @@ class RootCard extends React.Component {
     message: null,
     latest_commit_sha: null,
     commit_status: null,
-    last_update: null
+    last_update: null,
+    commit_url: null,
+    ci_name: null,
+    ci_url: null
   };
 
   constructor(props, context) {
@@ -47,6 +59,7 @@ class RootCard extends React.Component {
     // Check URL parameters. If there is one available, use that instead of the
     // Config defaults.
     const urlParams = new URLSearchParams(window.location.search);
+
     this.state.repoowner = urlParams.has('repoowner')
       ? urlParams.get('repoowner')
       : this.state.repoowner;
@@ -80,6 +93,10 @@ class RootCard extends React.Component {
 
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
+  handleClickCopy = () => {
+    console.log('TODO');
   };
 
   handleClick = () => {
@@ -232,16 +249,56 @@ class RootCard extends React.Component {
   }
 
   renderRepository() {
-    //const { repository } = this.state;
     return (
       <div>
         <a href={this.state.repo_url}>{this.state.reponame}</a>
         <br />
-        <a href={this.state.clone_url}>clone-link</a>
+        HTTPS:
+        <IconButton
+          aria-label="Copy"
+          value={this.state.clone_url}
+          onClick={this.handleClickCopy}
+        >
+          <Copy />
+        </IconButton>
+        SSH:
+        <IconButton
+          aria-label="Copy"
+          value={this.state.clone_url}
+          onClick={this.handleClickCopy}
+        >
+          <Copy />
+        </IconButton>
         <br />
+        Commit message:
+        <br />
+        <Typography component="div" noWrap>
+          {this.state.message}
+        </Typography>
+        <a href={this.state.message} />
+        <Typography>
+          Sha: {JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}...
+        </Typography>
+        <a href={this.state.commit_url}>
+          <Code />
+        </a>
+        <br />
+        Committer: {this.state.committer}
+        {' committed at '}
+        {this.state.last_update}
+        <br />
+        <Chip
+          color="primary"
+          avatar={
+            <Avatar>
+              <Success />
+            </Avatar>
+          }
+          label={this.state.ci_name}
+        />
+        {this.state.commit_status}
       </div>
     );
-    //<div>{JSON.stringify(repository.owner)}</div>;
   }
 
   render() {
