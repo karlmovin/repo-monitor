@@ -20,6 +20,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Success from '@material-ui/icons/Done';
 import Fail from '@material-ui/icons/Error';
+import Lnk from '@material-ui/icons/Link';
 
 import Code from '@material-ui/icons/Code';
 import Copy from '@material-ui/icons/FileCopy';
@@ -251,8 +252,14 @@ class RootCard extends React.Component {
   renderRepository() {
     return (
       <div>
-        <a href={this.state.repo_url}>{this.state.reponame}</a>
-        <br />
+        <CardHeader title={this.state.reponame} />
+        <IconButton
+          aria-label="Link"
+          value={this.state.repo_url}
+          onClick={this.handleClickCopy}
+        >
+          <Lnk />
+        </IconButton>
         HTTPS:
         <IconButton
           aria-label="Copy"
@@ -270,33 +277,30 @@ class RootCard extends React.Component {
           <Copy />
         </IconButton>
         <br />
-        Commit message:
-        <br />
-        <Typography component="div" noWrap>
-          {this.state.message}
-        </Typography>
-        <a href={this.state.message} />
-        <Typography>
-          Sha: {JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}...
-        </Typography>
-        <a href={this.state.commit_url}>
-          <Code />
-        </a>
-        <br />
-        Committer: {this.state.committer}
-        {' committed at '}
-        {this.state.last_update}
-        <br />
-        <Chip
-          color="primary"
-          avatar={
-            <Avatar>
-              <Success />
-            </Avatar>
-          }
-          label={this.state.ci_name}
-        />
-        {this.state.commit_status}
+        <Card>
+          <Typography component="div" noWrap>
+            {this.state.message}
+          </Typography>
+          <Typography>
+            Sha: {JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}
+          </Typography>
+          <a href={this.state.commit_url}>
+            <Code />
+          </a>
+          <br />
+          {this.state.committer}
+          {' committed at '}
+          {this.state.last_update}
+          <Chip
+            color="default"
+            avatar={
+              <Avatar>
+                <Success />
+              </Avatar>
+            }
+            label={this.state.commit_status}
+          />
+        </Card>
       </div>
     );
   }
