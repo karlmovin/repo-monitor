@@ -308,6 +308,41 @@ class RootCard extends React.Component {
   }
 
 
+  renderRepository() {
+    return (
+      <div>
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Code />
+            </Avatar>
+          }
+          label="Repo"
+          onClick={() => window.open(this.state.repo_url, '_blank')}
+        />
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Copy />
+            </Avatar>
+          }
+          label="HTTPS"
+          value={this.state.clone_url}
+          onClick={() => {
+            navigator.clipboard.writeText(this.state.clone_url);
+          }}
+        />
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Copy />
+            </Avatar>
+          }
+          label="SSH"
+          value={this.state.ssh_url}
           onClick={() => {
             navigator.clipboard.writeText(this.state.ssh_url);
           }}

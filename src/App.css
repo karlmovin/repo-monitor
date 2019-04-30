@@ -49,7 +49,7 @@ div[role='button'] {
     color: white;
 }
 
-.root-card .failed {
+.root-card .failure {
     background-color: rgb(161, 0, 0);
     color: white;
 }
