@@ -20,7 +20,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Success from '@material-ui/icons/Done';
 import Fail from '@material-ui/icons/Error';
-import Lnk from '@material-ui/icons/Link';
+import Build from '@material-ui/icons/Build';
 
 import Code from '@material-ui/icons/Code';
 import Copy from '@material-ui/icons/FileCopy';
@@ -118,10 +118,6 @@ class RootCard extends React.Component {
     console.log('TODO');
   };
 
-  handleClickRedirect = () => {
-    console.log('TODO');
-  };
-
   handleClick = () => {
     this.refreshState(false);
   };
@@ -141,7 +137,6 @@ class RootCard extends React.Component {
       .getRepo(repoowner, reponame, username, password)
       .then(
         function(response) {
-          console.log(response.data);
           var data = response.data;
           this.setState({
             repository: data,
@@ -323,8 +318,7 @@ class RootCard extends React.Component {
             </Avatar>
           }
           label="Repo"
-          value={this.state.repo_url}
-          onClick={this.handleClickCopy}
+          onClick={() => window.open(this.state.repo_url, '_blank')}
         />
         <Chip
           color="default"
@@ -366,7 +360,7 @@ class RootCard extends React.Component {
             </Avatar>
           }
           label="Commit"
-          onClick={this.handleClickRedirect}
+          onClick={() => window.open(this.state.commit_url, '_blank')}
         />
         <Chip
           color="default"
@@ -376,7 +370,7 @@ class RootCard extends React.Component {
             </Avatar>
           }
           label={this.state.commit_status}
-          onClick={this.handleClickRedirect}
+          onClick={() => window.open(this.state.ci_url, '_blank')}
         />
       </div>
     );
@@ -400,7 +394,7 @@ class RootCard extends React.Component {
           />
         )}
 
-        <CardContent>
+        <CardContent className="card-content">
           {!repository && this.renderConnect()}
           {repository && this.renderRepository()}
         </CardContent>
