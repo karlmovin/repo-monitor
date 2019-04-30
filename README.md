@@ -7,7 +7,17 @@ This is a web-based (React) widget shows information about a repository that you
 The widget uses the GitHub REST API v3 ([https://developer.github.com/v3/](https://developer.github.com/v3/)) and requires you to authenticate using your username/password or a personal access token. See this reference for how to create a personal access token: [https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
 ## Config
-This project uses a configuration file to set the default values of in the widget.
+This project uses a configuration file to set the default values of in the widget. This file should be named **config.js** and placed in the **src** folder. This template can be used to create your file.
+
+```js
+export default {
+    repoowner: '',
+    reponame: '',
+    branchname: '',
+    username: '',
+    password: ''
+};
+```
 
 ## CI/CD
 
@@ -24,7 +34,9 @@ The build steps involved are:
 1. Run **npm install and build** to install dependencies, tests and code compilation.
 1. Archive the build artifacts into a .ZIP file ready for deployment (release pipeline).
 
-Below is the build pipeline defined ([azure-pipelines.yml](azure-pipelines.yml)) in a YAML file.
+![Build pipeline run](/images/build_pipeline.png "Build pipeline run")
+
+The build pipeline configuration is defined as follows ([azure-pipelines.yml](azure-pipelines.yml)):
 
 ```yaml
 trigger:
@@ -65,4 +77,29 @@ steps:
 ```
 
 ### Release
+Once the project is built successfully and all the checks have been passed, the code will be continuously published to a website: [https://dd2482-devops.azurewebsites.net/](https://dd2482-devops.azurewebsites.net/).
+
+The release pipeline configuration is defined as follows.
+
+```yaml
+steps:
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy Azure App Service'
+  inputs:
+    azureSubscription: '$(Parameters.ConnectedServiceName)'
+    WebAppName: '$(Parameters.WebAppName)'
+```
+
+#### URL Parameters
+The widget can be initialized with default values that override the default values set in the **config.js** file using URL query parameters.
+
+1. repoowner (string): name of the repository owner.
+1. reponame (string): name of the repository.
+1. repoowner (string): name of the repository.
+1. branchname (string): name of the branch.
+1. username (string): name of the user.
+1. password (string): password or personal access token for the user.
+1. autoConnect (bool): if all the parameters are filled in, trigger the widget to automatically connect to the repository.
+
+## Config
 
