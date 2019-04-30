@@ -2,7 +2,7 @@
 
 # Repo Monitor
 
-This is a web-based (React) widget shows information about a repository that you are working on. This will help developers to see activity in the repository without having to browse to GitHhub and refresh the page all the time. 
+This is a web-based (React) widget shows information about a repository that you are working on. This will help developers to see activity in the repository without having to browse to GitHub and refresh the page all the time. 
 
 ![Widget screenshot 1](/images/widget1.png "Widget screenshot 1")
 
