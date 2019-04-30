@@ -177,12 +177,16 @@ class RootCard extends React.Component {
                   )
                   .then(
                     function(response) {
-                      var data = response.data.check_runs[0];
+                      // Get parameters from data.
+                      const data = response.data.check_runs[0];
+                      const ci_url = !data ? '' : data.details_url;
+                      const commit_status = !data ? '' : data.status;
+
                       //console.log(response);
                       this.setState({
                         loading: false,
-                        ci_url: data.details_url,
-                        commit_status: data.status
+                        ci_url: ci_url,
+                        commit_status: commit_status
                       });
 
                       // Continue to refresh the state.
