@@ -175,7 +175,9 @@ class RootCard extends React.Component {
                       // Get parameters from data.
                       const data = response.data.check_runs[0];
                       const ci_url = !data ? '' : data.details_url;
-                      const commit_status = !data ? '' : data.status;
+                      const commit_status = data.conclusion
+                        ? data.conclusion
+                        : data.status;
 
                       //console.log(response);
                       this.setState({
@@ -306,7 +308,6 @@ class RootCard extends React.Component {
       </div>
     );
   }
-
 
   renderRepository() {
     return (
