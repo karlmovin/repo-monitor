@@ -43,3 +43,23 @@
 div[role='button'] {
     margin: 10px 0;
 }
+
+.root-card .completed {
+    background-color: green;
+    color: white;
+}
+
+.root-card .failed {
+    background-color: rgb(161, 0, 0);
+    color: white;
+}
+
+.root-card .in_progress {
+    background-color: rgb(184, 127, 3);
+    color: black;
+}
+
+.root-card .queued {
+    background-color: rgb(184, 127, 3);
+    color: black;
+}

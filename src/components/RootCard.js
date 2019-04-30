@@ -311,6 +311,16 @@ class RootCard extends React.Component {
     );
   }
 
+  getColor(status) {
+    if (status == 'success') {
+      return 'green';
+    } else if (status == 'failed') {
+      return 'red';
+    } else {
+      return 'yellow';
+    }
+  }
+
   renderRepository() {
     return (
       <div>
@@ -371,12 +381,7 @@ class RootCard extends React.Component {
           onClick={() => window.open(this.state.commit_url, '_blank')}
         />
         <Chip
-          color="default"
-          avatar={
-            <Avatar>
-              <Success />
-            </Avatar>
-          }
+          className={this.state.commit_status}
           label={this.state.commit_status}
           onClick={() => window.open(this.state.ci_url, '_blank')}
         />
