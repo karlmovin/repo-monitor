@@ -100,3 +100,7 @@ The widget can be initialized with default values that override the default valu
 1. username (string): name of the user.
 1. password (string): password or personal access token for the user.
 1. autoConnect (bool): if all the parameters are filled in, trigger the widget to automatically connect to the repository.
+
+### Disclaimer ###
+**THIS CODE IN THIS REPOSITORY IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+
