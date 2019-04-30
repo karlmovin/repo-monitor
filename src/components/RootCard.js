@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
-//import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 
@@ -114,12 +113,16 @@ class RootCard extends React.Component {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
 
-  handleClickCopy = () => {
-    console.log('TODO');
-  };
-
   handleClick = () => {
     this.refreshState(false);
+  };
+
+  handleTooltipClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleTooltipOpen = () => {
+    this.setState({ open: true });
   };
 
   refreshState(silent) {
@@ -329,7 +332,9 @@ class RootCard extends React.Component {
           }
           label="HTTPS"
           value={this.state.clone_url}
-          onClick={this.handleClickCopy}
+          onClick={() => {
+            navigator.clipboard.writeText(this.state.clone_url);
+          }}
         />
         <Chip
           color="default"
@@ -340,7 +345,9 @@ class RootCard extends React.Component {
           }
           label="SSH"
           value={this.state.ssh_url}
-          onClick={this.handleClickCopy}
+          onClick={() => {
+            navigator.clipboard.writeText(this.state.ssh_url);
+          }}
         />
         <Typography component="div" variant="h4" noWrap>
           {this.state.message}
