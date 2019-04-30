@@ -6,6 +6,10 @@ This is a web-based (React) widget shows information about a repository that you
 
 The widget uses the GitHub REST API v3 ([https://developer.github.com/v3/](https://developer.github.com/v3/)) and requires you to authenticate using your username/password or a personal access token. See this reference for how to create a personal access token: [https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
+The widget also comes with lively animations.
+
+![Wrong password](/images/error.gif "Wrong password")
+
 ## Config
 This project uses a configuration file to set the default values of in the widget. This file should be named **config.js** and placed in the **src** folder. This template can be used to create your file.
 
