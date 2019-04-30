@@ -1,8 +1,9 @@
 import React from 'react';
+import moment from 'moment';
+
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
@@ -354,8 +355,8 @@ class RootCard extends React.Component {
         </Typography>
         <div>
           <strong>{this.state.committer}</strong>
-          {' committed at '}
-          {this.state.last_update}
+          {' committed '}
+          {moment(this.state.last_update).fromNow()}
         </div>
         <Chip
           label={JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}
