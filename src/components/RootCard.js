@@ -202,7 +202,7 @@ class RootCard extends React.Component {
           this.setState({
             loading: false,
             error:
-              'Oops, something went wrong! Please check your credentials and try again.'
+              'Oops, something went wrong! Please check your credentials and try again. :)'
           });
         }.bind(this)
       );
