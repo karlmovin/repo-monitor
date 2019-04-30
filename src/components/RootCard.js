@@ -179,7 +179,7 @@ class RootCard extends React.Component {
                         ? data.conclusion
                           ? data.conclusion
                           : data.status
-                        : '';
+                        : 'no data';
 
                       //console.log(response);
                       this.setState({
