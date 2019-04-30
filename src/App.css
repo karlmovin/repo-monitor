@@ -37,4 +37,9 @@
 
 .root-card .card-content {
     padding: 0px;
+    padding-bottom: 0 !important;
+}
+
+div[role='button'] {
+    margin: 10px 0;
 }
