@@ -128,7 +128,7 @@ class RootCard extends React.Component {
 
   refreshState(silent) {
     const { repoowner, reponame, branchname, username, password } = this.state;
-    
+
     // If it's not a silent refresh, show the loading spinner.
     if (!silent) {
       this.setState({ loading: true, error: null });
@@ -315,55 +315,69 @@ class RootCard extends React.Component {
   renderRepository() {
     return (
       <div>
-        <CardHeader title={this.state.reponame} />
-        <IconButton
-          aria-label="Link"
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Code />
+            </Avatar>
+          }
+          label="Repo"
           value={this.state.repo_url}
           onClick={this.handleClickCopy}
-        >
-          <Lnk />
-        </IconButton>
-        HTTPS:
-        <IconButton
-          aria-label="Copy"
+        />
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Copy />
+            </Avatar>
+          }
+          label="HTTPS"
           value={this.state.clone_url}
           onClick={this.handleClickCopy}
-        >
-          <Copy />
-        </IconButton>
-        SSH:
-        <IconButton
-          aria-label="Copy"
-          value={this.state.clone_url}
+        />
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Copy />
+            </Avatar>
+          }
+          label="SSH"
+          value={this.state.ssh_url}
           onClick={this.handleClickCopy}
-        >
-          <Copy />
-        </IconButton>
-        <br />
-        <Card>
-          <Typography component="div" noWrap>
-            {this.state.message}
-          </Typography>
-          <Chip
-            label={JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}
-          />
-          <Chip label={<Code />} onClick={this.handleClickRedirect} />
-          <div>
-            {this.state.committer}
-            {' committed at '}
-            {this.state.last_update}
-            <Chip
-              color="default"
-              avatar={
-                <Avatar>
-                  <Success />
-                </Avatar>
-              }
-              label={this.state.commit_status}
-              onClick={this.handleClickRedirect}
-            />
-          </div>
-        </Card>
+        />
+        <Typography component="div" variant="h4" noWrap>
+          {this.state.message}
+        </Typography>
+        <div>
+          <strong>{this.state.committer}</strong>
+          {' committed at '}
+          {this.state.last_update}
+        </div>
+        <Chip
+          label={JSON.stringify(this.state.latest_commit_sha).substring(1, 8)}
+        />
+        <Chip
+          avatar={
+            <Avatar>
+              <Code />
+            </Avatar>
+          }
+          label="Commit"
+          onClick={this.handleClickRedirect}
+        />
+        <Chip
+          color="default"
+          avatar={
+            <Avatar>
+              <Success />
+            </Avatar>
+          }
+          label={this.state.commit_status}
+          onClick={this.handleClickRedirect}
+        />
       </div>
     );
   }
