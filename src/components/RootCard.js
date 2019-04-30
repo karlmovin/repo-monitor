@@ -123,11 +123,20 @@ class RootCard extends React.Component {
   };
 
   handleClick = () => {
-    const { repoowner, reponame, branchname, username, password } = this.state;
-    this.setState({ loading: true, error: null });
+    this.refreshState(false);
+  };
 
-    // TODO: Call GitHub.
+  refreshState(silent) {
+    const { repoowner, reponame, branchname, username, password } = this.state;
+    
+    // If it's not a silent refresh, show the loading spinner.
+    if (!silent) {
+      this.setState({ loading: true, error: null });
+    }
+
     const service = new GitHubService();
+
+    // Get the repository.
     service
       .getRepo(repoowner, reponame, username, password)
       .then(
@@ -135,7 +144,6 @@ class RootCard extends React.Component {
           console.log(response.data);
           var data = response.data;
           this.setState({
-            loading: false,
             repository: data,
             clone_url: data.clone_url,
             ssh_url: data.ssh_url,
@@ -143,6 +151,7 @@ class RootCard extends React.Component {
             last_update: data.updated_at
           });
 
+          // Get the commit.
           service
             .getCommit(repoowner, reponame, branchname, username, password)
             .then(
@@ -156,6 +165,8 @@ class RootCard extends React.Component {
                   committer: data.commit.committer.name,
                   message: data.commit.message
                 });
+
+                // Get the commit runs.
                 service
                   .getCommitRuns(
                     repoowner,
@@ -169,9 +180,13 @@ class RootCard extends React.Component {
                       var data = response.data.check_runs[0];
                       //console.log(response);
                       this.setState({
+                        loading: false,
                         ci_url: data.details_url,
                         commit_status: data.status
                       });
+
+                      // Continue to refresh the state.
+                      setTimeout(() => this.refreshState(true), 5000);
                     }.bind(this)
                   );
               }.bind(this)
@@ -188,7 +203,7 @@ class RootCard extends React.Component {
           });
         }.bind(this)
       );
-  };
+  }
 
   renderConnect() {
     const {
