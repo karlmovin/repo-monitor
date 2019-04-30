@@ -55,11 +55,11 @@ div[role='button'] {
 }
 
 .root-card .in_progress {
-    background-color: rgb(184, 127, 3);
+    background-color: rgb(255, 174, 0);
     color: black;
 }
 
 .root-card .queued {
-    background-color: rgb(184, 127, 3);
+    background-color: rgb(255, 174, 0);
     color: black;
 }
