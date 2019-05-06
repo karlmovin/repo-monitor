@@ -392,7 +392,7 @@ class RootCard extends React.Component {
       <Card className={cardClassNames}>
         {!repository && (
           <CardHeader
-            title="Repository monitor"
+            title="Repository monitor test"
             subheader="You can use a password or personal access token to authenticate with GitHub."
           />
         )}
