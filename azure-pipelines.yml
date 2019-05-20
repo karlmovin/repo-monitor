@@ -25,10 +25,21 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
+- script:
     npm install
+  displayName: 'npm install'
+
+- script:
+    grunt jshint
+  displayName: 'Grunt jshint'
+
+- script:
+    npm run test
+  displayName: 'npm test'
+
+- script:
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm build'
 
 - task: ArchiveFiles@2
   inputs:
